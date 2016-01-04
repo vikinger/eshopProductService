@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: de.eshop.productservice.EshopProductServiceApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.058 sec - in de.eshop.productservice.EshopProductServiceApplicationTests

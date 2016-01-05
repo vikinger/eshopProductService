@@ -3,10 +3,13 @@ package de.eshop.productservice;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import de.eshop.productservice.Category;
 import de.eshop.productservice.CategoryDAO;
 import de.eshop.productservice.CategoryManager;
 
+@Repository
 public class CategoryManagerImpl implements CategoryManager{
 	private CategoryDAO helper;
 	

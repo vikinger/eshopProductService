@@ -16,6 +16,9 @@ public class ProductController {
 	@Autowired
 	private ProductManager repo;
 	
+	@Autowired
+	private CategoryManager cm;
+	
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public ResponseEntity<Iterable<Product>> getProducts(){
 		Iterable<Product> allProducts = repo.getProducts();
@@ -38,6 +41,12 @@ public class ProductController {
 	public ResponseEntity<?> deleteProductById(@PathVariable Integer productId) {
 		repo.deleteProductById(productId);
 		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
+	public ResponseEntity<?> getCategoryById(@PathVariable Integer categoryId) {
+		Category category = cm.getCategory(categoryId);
+		return new ResponseEntity<>(category, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/category/{categoryId}", method = RequestMethod.DELETE)

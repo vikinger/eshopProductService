@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:de.eshop.productservice.EshopProductServiceApplication</config>
+		<config>java:de.eshop.productserviceAPI.EshopProductServiceApplication</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

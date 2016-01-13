@@ -25,6 +25,12 @@ public class ProductController {
 		return new ResponseEntity<>(allProducts, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/categories", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<CategorySlim>> getCategories(){
+		Iterable<CategorySlim> allCategories = cm.getCategories();
+		return new ResponseEntity<>(allCategories, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/products/search", method = RequestMethod.GET)
 	public ResponseEntity<Iterable<Product>> getProductsForSearchValues(@RequestParam("value") String searchValue, @RequestParam("min") Double searchMinPrice, @RequestParam("max") Double searchMaxPrice){
 		Iterable<Product> products = repo.getProductsForSearchValues(searchValue, searchMinPrice, searchMaxPrice);
@@ -45,13 +51,13 @@ public class ProductController {
 	
 	@RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
 	public ResponseEntity<?> getCategoryById(@PathVariable Integer categoryId) {
-		Category category = cm.getCategory(categoryId);
-		return new ResponseEntity<>(category, HttpStatus.OK);
+		CategorySlim categorySlim = cm.getCategorySlim(categoryId);
+		return new ResponseEntity<>(categorySlim, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/category/{categoryId}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteProductsByCategoryId(@PathVariable Integer categoryId) {
-		repo.deleteProductsByCategoryId(categoryId);
+	public ResponseEntity<?> delCategoryById(@PathVariable Integer categoryId) {
+		cm.delCategoryById(categoryId);
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
@@ -64,6 +70,12 @@ public class ProductController {
 	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public ResponseEntity<?> addProduct(@RequestBody ProductSlim productSlim) {
 		repo.addProduct(productSlim);
+		return new ResponseEntity<>(null, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = "/category", method = RequestMethod.POST)
+	public ResponseEntity<?> addCategory(@RequestBody CategorySlim categorySlim) {
+		cm.addCategory(categorySlim.getName());
 		return new ResponseEntity<>(null, HttpStatus.CREATED);
 	}
 }

@@ -44,7 +44,7 @@ public class ProductManagerImpl implements ProductManager {
 		int productId = -1;
 		
 		CategoryManager categoryManager = new CategoryManagerImpl();
-		Category category = categoryManager.getCategory(productSlim.getCategoryId());
+		Category category = categoryManager.getCategory(productSlim.getCategory());
 		
 		if(category != null){
 			Product newProduct;

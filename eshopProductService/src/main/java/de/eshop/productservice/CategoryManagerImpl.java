@@ -1,6 +1,7 @@
 package de.eshop.productservice;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -18,18 +19,34 @@ public class CategoryManagerImpl implements CategoryManager{
 	}
 
 	@Override
-	public List<Category> getCategories() {
-		return helper.getObjectList();
+	public List<CategorySlim> getCategories() {
+		List<Category> categoryList = helper.getObjectList();
+		List<CategorySlim> categorySlimList = new ArrayList<CategorySlim>();
+		for(Category category : categoryList)
+		{
+			CategorySlim categorySlim = new CategorySlim(category.getId(), category.getName());
+			categorySlimList.add(categorySlim);
+		}
+		return categorySlimList;
 	}
 
+	@Override
+	public CategorySlim getCategorySlim(int id) {
+		Category category = helper.getObjectById(id);
+		CategorySlim categorySlim = new CategorySlim(category.getId(), category.getName());
+		return categorySlim;
+	}
+	
 	@Override
 	public Category getCategory(int id) {
 		return helper.getObjectById(id);
 	}
 
 	@Override
-	public Category getCategoryByName(String name) {
-		return helper.getObjectByName(name);
+	public CategorySlim getCategoryByName(String name) {
+		Category category = helper.getObjectByName(name);
+		CategorySlim categorySlim = new CategorySlim(category.getId(), category.getName());
+		return categorySlim;
 	}
 
 	@Override
@@ -40,7 +57,7 @@ public class CategoryManagerImpl implements CategoryManager{
 	}
 
 	@Override
-	public void delCategory(Category cat) {
+	public void delCategory(CategorySlim cat) {
 	
 // 		Products are also deleted because of relation in Category.java 
 		helper.deleteById(cat.getId());

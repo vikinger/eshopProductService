@@ -15,23 +15,23 @@ public class ProductSlim implements java.io.Serializable {
 
 	private double price;
 	
-	private int categoryId;
+	private int category;
 
 	private String details;
 
 	public ProductSlim() {
 	}
 
-	public ProductSlim(String name, double price, int categoryId) {
+	public ProductSlim(String name, double price, int category) {
 		this.name = name;
 		this.price = price;
-		this.categoryId = categoryId;
+		this.category = category;
 	}
 
-	public ProductSlim(String name, double price, int categoryId, String details) {
+	public ProductSlim(String name, double price, int category, String details) {
 		this.name = name;
 		this.price = price;
-		this.categoryId = categoryId;
+		this.category = category;
 		this.details = details;
 	}
 
@@ -51,12 +51,12 @@ public class ProductSlim implements java.io.Serializable {
 		this.price = price;
 	}
 	
-	public Integer getCategoryId() {
-	return this.categoryId;
+	public Integer getCategory() {
+	return this.category;
 	}
 
-	public void setCategory(int categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory(int category) {
+		this.category = category;
 	}
 
 	public String getDetails() {

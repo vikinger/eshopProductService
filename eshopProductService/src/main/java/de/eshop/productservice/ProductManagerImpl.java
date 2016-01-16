@@ -1,8 +1,13 @@
 package de.eshop.productservice;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
+
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 import de.eshop.productservice.Category;
 import de.eshop.productservice.CategoryManager;
@@ -12,6 +17,7 @@ import de.eshop.productservice.ProductManager;
 
 @Repository
 public class ProductManagerImpl implements ProductManager {
+	private final Map<Integer, Product> productCache = new LinkedHashMap<Integer, Product>();
 	private ProductDAO helper;
 	
 	public ProductManagerImpl() {
@@ -30,8 +36,16 @@ public class ProductManagerImpl implements ProductManager {
 	}
 
 	@Override
+	@HystrixCommand(fallbackMethod = "getProductFromCache", commandProperties = {
+	@HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "2") })
 	public Product getProductById(int id) {
-		return helper.getObjectById(id);
+		Product tempProduct = helper.getObjectById(id);
+		productCache.putIfAbsent(id, tempProduct);
+		return tempProduct;
+	}
+	
+	public Product getProductFromCache(int id) {
+		return productCache.getOrDefault(id, new Product());
 	}
 
 	@Override
